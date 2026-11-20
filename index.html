@@ -1,0 +1,475 @@
+<!doctype html>
+<html lang="cs">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Tichá voda – masáže</title>
+<meta name="description" content="Regenerační a sportovní masáže, manuální lymfodrenáž, masáže obličeje a program Recovery pro záda a ramena.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600&family=Manrope:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+/* Layout: dark photo hero lit by a pointer-following warm light, grouped price list, Recovery packages, preparation guide, voucher builder */
+:root{
+  --espresso:#231A15; --bark:#2F241D; --bark-2:#3B2E25;
+  --sand:#D9B98C; --cream:#F0E6D6; --ash:#A8998A; --basalt:#4A403A;
+  --display:"Fraunces",Georgia,serif; --body:"Manrope",system-ui,sans-serif;
+  color-scheme:dark;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--espresso);color:var(--cream);font:400 17px/1.65 var(--body)}
+h1,h2,h3{font-family:var(--display);font-weight:400;line-height:1.08;margin:0;text-wrap:balance}
+a{color:inherit}
+img{display:block;max-width:100%}
+:focus-visible{outline:2px solid var(--sand);outline-offset:3px}
+.wrap{max-width:1160px;margin:0 auto;padding-left:max(24px,env(safe-area-inset-left,0px));padding-right:max(24px,env(safe-area-inset-right,0px))}
+.btn{display:inline-block;background:var(--sand);color:var(--espresso);padding:15px 28px;border-radius:14px;text-decoration:none;font:700 16px var(--body);border:0;cursor:pointer;text-align:center}
+.btn:hover{background:var(--cream)}
+.btn.line{background:transparent;color:var(--cream);box-shadow:inset 0 0 0 1.5px var(--ash)}
+.btn.line:hover{box-shadow:inset 0 0 0 1.5px var(--sand);color:var(--sand)}
+
+header{display:flex;justify-content:space-between;align-items:center;padding-block:24px}
+.logo{font:400 26px var(--display);text-decoration:none}
+nav a{margin-left:26px;text-decoration:none;font-size:15px;color:var(--ash)}
+nav a:hover{color:var(--sand)}
+
+/* hero: the photo sits in the dark; a warm light follows the pointer and brings the colour back */
+.gh{position:relative;border-radius:28px;overflow:hidden;height:clamp(540px,80vh,760px);background:#120d0a;margin-top:4px;touch-action:pan-y;isolation:isolate}
+.gh img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:62% 45%;max-width:none;user-select:none;-webkit-user-drag:none}
+.gh-base{filter:grayscale(.92) brightness(.34) contrast(1.12)}
+.gh-warm{filter:saturate(1.18) sepia(.16) brightness(1.06) contrast(1.04);-webkit-mask-repeat:no-repeat;mask-repeat:no-repeat;will-change:mask-image}
+.gh-heat{position:absolute;inset:0;mix-blend-mode:soft-light;pointer-events:none}
+.gh-grain{position:absolute;inset:-50%;opacity:.16;pointer-events:none;mix-blend-mode:overlay;
+  background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='220' height='220'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 1  0 0 0 0 1  0 0 0 0 1  0 0 0 1.2 0'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>")}
+.gh-shade{position:absolute;inset:0;pointer-events:none;background:linear-gradient(90deg,rgba(18,13,10,.9) 0,rgba(18,13,10,.55) 34%,rgba(18,13,10,0) 62%)}
+.gh-text{position:absolute;left:56px;bottom:56px;max-width:540px;z-index:2}
+.gh h1{font-size:clamp(46px,6.4vw,92px)}
+.gh p{font-size:19px;color:#d6c8b6;margin:20px 0 30px;max-width:27em}
+.gh .actions{display:flex;gap:12px;flex-wrap:wrap}
+.gh-hint{position:absolute;right:22px;top:22px;z-index:2;display:flex;align-items:center;gap:10px;font-size:13px;color:var(--cream);background:rgba(35,26,21,.45);-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px);padding:9px 15px 9px 11px;border-radius:999px;transition:opacity .8s}
+.gh-hint i{width:10px;height:10px;border-radius:50%;background:#f3c27e;box-shadow:0 0 12px 3px rgba(243,194,126,.7)}
+.gh.touched .gh-hint{opacity:0}
+
+/* stats band */
+.stats{display:grid;grid-template-columns:repeat(4,1fr);border-block:1px solid var(--basalt);margin-top:8px}
+.stats div{padding:26px 20px;border-left:1px solid var(--basalt)}
+.stats div:first-child{border-left:0;padding-left:0}
+.stats b{display:block;font:400 clamp(32px,3.8vw,46px)/1 var(--display);color:var(--sand);margin-bottom:6px;white-space:nowrap}
+.stats span{color:var(--ash);font-size:14px}
+
+section{padding-block:96px}
+h2{font-size:clamp(38px,4.8vw,60px);margin-bottom:18px}
+.intro{color:var(--ash);max-width:36em;margin:0 0 48px}
+
+/* price list */
+.menu{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
+.cat{background:var(--bark);padding:30px;display:flex;flex-direction:column;gap:6px}
+.cat:nth-child(1){border-radius:46px 30px 52px 28px}
+.cat:nth-child(2){border-radius:28px 50px 30px 54px}
+.cat:nth-child(3){border-radius:52px 28px 46px 34px}
+.cat:nth-child(4){border-radius:30px 54px 28px 48px}
+.cat h3{font-size:28px;margin-bottom:4px}
+.cat > p{margin:0 0 10px;color:var(--ash);font-size:15px}
+.row{display:flex;align-items:baseline;gap:10px;padding:9px 0;border-top:1px solid var(--basalt);font-size:15px}
+.row .n{color:var(--cream);white-space:nowrap}
+.row .t{color:var(--ash);white-space:nowrap}
+.row .dots{flex:1;border-bottom:1px dotted var(--basalt);transform:translateY(-4px);min-width:12px}
+.row b{font:600 21px var(--display);color:var(--sand);white-space:nowrap;font-variant-numeric:tabular-nums}
+.cat.face{grid-column:span 2;display:grid;grid-template-columns:1fr 1fr;gap:28px;padding:0;overflow:hidden;border-radius:30px 54px 28px 48px;background:var(--bark-2)}
+.cat.face .in{padding:30px 0 30px 30px;display:flex;flex-direction:column;gap:6px}
+.cat.face img{width:100%;height:100%;object-fit:cover;min-height:280px}
+
+/* recovery */
+.rec{background:var(--bark);border-radius:28px;overflow:hidden}
+.rec-top{display:grid;grid-template-columns:1.1fr .9fr}
+.rec-text{padding:48px}
+.rec-text .kick{color:var(--sand);font-size:15px;margin-bottom:10px}
+.rec-text h2{margin-bottom:12px}
+.rec-text > p{color:var(--ash);margin:0 0 28px;max-width:32em}
+.rec-photo img{width:100%;height:100%;object-fit:cover;min-height:360px}
+.lists{display:grid;grid-template-columns:1fr 1fr;gap:28px}
+.lists h3{font-size:22px;margin-bottom:10px}
+.lists ul{list-style:none;padding:0;margin:0;display:grid;gap:7px;font-size:15px;color:var(--ash)}
+.lists li{padding-left:20px;position:relative}
+.lists li::before{content:"";position:absolute;left:0;top:.62em;width:8px;height:8px;border-radius:50%;background:var(--sand);opacity:.8}
+.packs{display:grid;grid-template-columns:repeat(3,1fr);border-top:1px solid var(--basalt)}
+.pack{padding:32px 34px;border-left:1px solid var(--basalt);display:flex;flex-direction:column;gap:6px}
+.pack:first-child{border-left:0}
+.pack .cnt{font-size:15px;color:var(--ash)}
+.pack .price{font:400 40px/1.05 var(--display)}
+.pack .per{color:var(--ash);font-size:14px}
+.pack .save{align-self:flex-start;background:var(--sand);color:var(--espresso);font-weight:700;font-size:13px;padding:4px 10px;border-radius:8px;margin-top:4px}
+.pack .btn{margin-top:auto;padding:12px 18px;font-size:15px}
+.pack .sp{flex:1;min-height:14px}
+.pack.best{background:var(--bark-2)}
+.rec-note{display:flex;gap:28px;flex-wrap:wrap;padding:22px 34px;border-top:1px solid var(--basalt);color:var(--ash);font-size:14px}
+.rec-note b{color:var(--cream);font-weight:500}
+
+/* preparation guide (it is a real sequence: before, during, after) */
+.steps{list-style:none;padding:0;margin:0;display:grid;grid-template-columns:repeat(3,1fr);gap:0 36px;counter-reset:s}
+.steps li{counter-increment:s;padding:24px 0;border-top:1px solid var(--basalt);display:grid;grid-template-columns:44px 1fr;gap:12px}
+.steps li::before{content:counter(s);font:400 30px/1 var(--display);color:var(--sand)}
+.steps h3{font-size:22px;margin-bottom:6px}
+.steps p{margin:0;color:var(--ash);font-size:15px}
+.expect{display:grid;grid-template-columns:1.3fr .7fr;gap:24px;margin-top:40px}
+.expect .card{background:var(--bark);border-radius:22px;padding:30px}
+.expect h3{font-size:28px;margin-bottom:8px}
+.expect p{color:var(--ash);margin:0}
+.hours .now{color:var(--sand);font-size:15px;margin-bottom:14px}
+.hours ul{list-style:none;padding:0;margin:0}
+.hours li{display:flex;justify-content:space-between;padding:7px 0;border-top:1px solid var(--basalt);font-size:15px;color:var(--ash);font-variant-numeric:tabular-nums}
+.hours li.today{color:var(--cream);font-weight:700}
+
+.about{display:grid;grid-template-columns:.9fr 1.1fr;gap:64px;align-items:center}
+.about img{border-radius:20px;aspect-ratio:1;object-fit:cover;width:100%}
+.about p{max-width:34em}
+
+/* voucher builder */
+.gift{display:grid;grid-template-columns:1fr 1fr;gap:48px;align-items:center}
+.gift form{display:grid;gap:16px}
+label{display:grid;gap:6px;font-size:14px;color:var(--ash)}
+input,select{font:inherit;padding:13px 14px;background:var(--bark);border:1px solid var(--basalt);color:var(--cream);border-radius:12px;width:100%}
+input:focus,select:focus{border-color:var(--sand);outline:none}
+.voucher{background:var(--sand);color:var(--espresso);border-radius:24px;padding:36px;aspect-ratio:1.6;display:flex;flex-direction:column;justify-content:space-between;position:relative;overflow:hidden;box-shadow:0 30px 60px -20px rgba(0,0,0,.6)}
+.voucher::after{content:"";position:absolute;right:-60px;top:-60px;width:220px;height:200px;border-radius:48% 52% 46% 54%/55% 50% 50% 45%;background:rgba(35,26,21,.12)}
+.voucher .v-top{display:flex;justify-content:space-between;font-size:13px}
+.voucher .v-name{font:400 clamp(24px,2.8vw,36px)/1.1 var(--display)}
+.voucher .v-for{font-size:15px}
+.voucher .v-bottom{display:flex;justify-content:space-between;align-items:end;gap:12px}
+.voucher .v-price{font:600 30px var(--display);white-space:nowrap}
+.ok{color:var(--sand);margin:0}
+
+.book{display:grid;grid-template-columns:1fr 1fr;gap:48px;background:var(--bark);border-radius:28px;padding:48px}
+.book p{color:var(--ash)}
+.book b{color:var(--cream);font-weight:500}
+.book form{display:grid;gap:14px}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+footer.site{padding-block:36px 96px;color:var(--ash);font-size:13px}
+
+/* rain button */
+.rain{position:fixed;right:calc(20px + env(safe-area-inset-right,0px));bottom:calc(20px + env(safe-area-inset-bottom,0px));z-index:20;display:flex;align-items:center;gap:10px;background:var(--bark-2);color:var(--cream);border:1.5px solid var(--basalt);border-radius:999px;padding:12px 18px 12px 14px;font:500 15px var(--body);cursor:pointer;box-shadow:0 10px 30px -10px rgba(0,0,0,.6)}
+.rain:hover,.rain[aria-pressed=true]{border-color:var(--sand)}
+.rain .bars{display:flex;gap:3px;align-items:end;height:16px}
+.rain .bars i{width:3px;height:4px;background:var(--sand);border-radius:2px}
+.rain[aria-pressed=true] .bars i{animation:eq 1s ease-in-out infinite}
+.rain .bars i:nth-child(2){animation-delay:.2s}.rain .bars i:nth-child(3){animation-delay:.45s}.rain .bars i:nth-child(4){animation-delay:.1s}
+@keyframes eq{0%,100%{height:4px}50%{height:16px}}
+
+@media (max-width:1120px){
+  .menu{grid-template-columns:1fr 1fr}
+  .cat.face{grid-column:span 2}
+  .steps{grid-template-columns:1fr 1fr}
+}
+@media (max-width:900px){
+  nav{display:none}
+  .wrap{padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+  .gh{height:auto;min-height:620px;border-radius:22px;display:flex;flex-direction:column;justify-content:flex-end}
+  .gh img{object-position:70% 30%}
+  .gh-shade{background:linear-gradient(0deg,rgba(18,13,10,.95) 0,rgba(18,13,10,.75) 38%,rgba(18,13,10,0) 68%)}
+  .gh-text{position:relative;left:auto;bottom:auto;padding:24px 20px 26px}
+  .gh h1{font-size:clamp(40px,11vw,56px)}
+  .gh p{font-size:17px;margin:14px 0 22px}
+  .gh-hint{right:14px;top:14px}
+  .stats{grid-template-columns:1fr 1fr}
+  .stats div:nth-child(3){border-left:0;padding-left:0}
+  .stats div:nth-child(n+3){border-top:1px solid var(--basalt)}
+  .rec-top,.about,.gift,.book,.expect{grid-template-columns:minmax(0,1fr);gap:32px}
+  .rec-top{gap:0}
+  .rec-photo{order:-1}
+  .rec-photo img{min-height:240px;max-height:300px}
+  .rec-text{padding:26px}
+  .packs{grid-template-columns:1fr}
+  .pack{border-left:0;border-top:1px solid var(--basalt);padding:24px 26px}
+  .pack:first-child{border-top:0}
+  .rec-note{padding:20px 26px}
+  .book{padding:26px}
+  .two{grid-template-columns:1fr}
+  .voucher{padding:24px}
+  .rain span.t{display:none}
+  .rain{padding:12px 14px}
+}
+@media (max-width:640px){
+  .menu{grid-template-columns:minmax(0,1fr)}
+  .cat.face{grid-column:auto;grid-template-columns:1fr;gap:0}
+  .cat.face .in{padding:26px}
+  .cat.face img{min-height:200px;max-height:240px;order:-1}
+  .cat{padding:26px}
+  .lists,.steps{grid-template-columns:minmax(0,1fr)}
+}
+@media (prefers-reduced-motion:reduce){.rain .bars i{animation:none!important}html{scroll-behavior:auto}}
+</style>
+</head>
+<body>
+<div class="wrap">
+<header>
+  <a class="logo" href="#">Tichá voda</a>
+  <nav><a href="#cenik">Ceník</a><a href="#recovery">Recovery</a><a href="#priprava">Příprava</a><a href="#poukaz">Poukaz</a><a href="#objednani">Objednání</a></nav>
+</header>
+
+<div class="gh" id="gh">
+  <img class="gh-base" src="img/1741522509438-a120c0bb5e88.jpg" alt="" aria-hidden="true">
+  <img class="gh-warm" id="ghWarm" src="img/1741522509438-a120c0bb5e88.jpg" alt="Pomalá masáž zad v teplém světle">
+  <div class="gh-heat" id="ghHeat" aria-hidden="true"></div>
+  <div class="gh-grain" aria-hidden="true"></div>
+  <div class="gh-shade" aria-hidden="true"></div>
+  <div class="gh-hint" aria-hidden="true"><i></i><span id="ghHintText">Pohněte kurzorem, teplo půjde s vámi</span></div>
+  <div class="gh-text">
+    <h1>Péče o tělo i mysl</h1>
+    <p>Regenerační a sportovní masáže, manuální lymfodrenáž a masáže obličeje. Pro záda po náročném týdnu i pro hlavu, která potřebuje vypnout.</p>
+    <div class="actions"><a class="btn" href="#objednani">Objednat masáž</a><a class="btn line" href="#cenik">Zobrazit ceník</a></div>
+  </div>
+</div>
+
+<div class="stats">
+  <div><b>od 700 Kč</b><span>klasická masáž obličeje</span></div>
+  <div><b>90 min</b><span>program Recovery pro záda a ramena</span></div>
+  <div><b>2 320 Kč</b><span>úspora v balíčku 8 seancí</span></div>
+  <div><b>1× týdně</b><span>doporučená frekvence pro stabilní výsledky</span></div>
+</div>
+
+<section id="cenik">
+  <h2>Ceník</h2>
+  <p class="intro">Každou masáž přizpůsobuji vašemu aktuálnímu stavu. Tlak i intenzitu doladíme během masáže, stačí říct.</p>
+  <div class="menu">
+    <article class="cat">
+      <h3>Regenerační masáž</h3>
+      <p>Uvolní ztuhlé svaly a vrátí tělu lehkost po náročném týdnu.</p>
+      <div class="row"><span class="n">Celé tělo</span><span class="dots"></span><span class="t">60 min</span><b>1 200 Kč</b></div>
+      <div class="row"><span class="n">Celé tělo</span><span class="dots"></span><span class="t">90 min</span><b>1 600 Kč</b></div>
+      <div class="row"><span class="n">Záda a šíje</span><span class="dots"></span><span class="t">45 min</span><b>1 000 Kč</b></div>
+      <div class="row"><span class="n">Záda a šíje</span><span class="dots"></span><span class="t">60 min</span><b>1 200 Kč</b></div>
+    </article>
+    <article class="cat">
+      <h3>Sportovní masáž</h3>
+      <p>Hlubší práce se svaly po tréninku, před závodem i při přetížení.</p>
+      <div class="row"><span class="n">Celé tělo</span><span class="dots"></span><span class="t">60 min</span><b>1 400 Kč</b></div>
+      <div class="row"><span class="n">Celé tělo</span><span class="dots"></span><span class="t">90 min</span><b>1 900 Kč</b></div>
+    </article>
+    <article class="cat">
+      <h3>Manuální lymfodrenáž</h3>
+      <p>Jemná technika na otoky, těžké nohy a podporu lymfatického systému.</p>
+      <div class="row"><span class="n">Lymfodrenáž</span><span class="dots"></span><span class="t">60 min</span><b>1 300 Kč</b></div>
+      <div class="row"><span class="n">Lymfodrenáž</span><span class="dots"></span><span class="t">90 min</span><b>1 800 Kč</b></div>
+    </article>
+    <article class="cat">
+      <h3>Komplexní regenerační masáž</h3>
+      <p>Celé tělo od hlavy po chodidla, když potřebujete opravdu vypnout.</p>
+      <div class="row"><span class="n">Komplexní</span><span class="dots"></span><span class="t">90 min</span><b>1 900 Kč</b></div>
+    </article>
+    <article class="cat face">
+      <div class="in">
+        <h3>Masáže obličeje</h3>
+        <p>Uvolnění čelistí a čela, tonus pleti a odpočinek pro unavené oči.</p>
+        <div class="row"><span class="n">Klasická masáž obličeje</span><span class="dots"></span><b>700 Kč</b></div>
+        <div class="row"><span class="n">Skulpturální masáž</span><span class="dots"></span><span class="t">30 min</span><b>800 Kč</b></div>
+        <div class="row"><span class="n">Skulpturální masáž</span><span class="dots"></span><span class="t">50 min</span><b>1 200 Kč</b></div>
+        <div class="row"><span class="n">Myolifting, Anti-Age</span><span class="dots"></span><b>1 400 Kč</b></div>
+      </div>
+      <img src="img/1598901986949-f593ff2a31a6.jpg" alt="Masáž obličeje v tlumeném teplém světle">
+    </article>
+  </div>
+</section>
+
+<section id="recovery" style="padding-top:0">
+  <div class="rec">
+    <div class="rec-top">
+      <div class="rec-text">
+        <div class="kick">Terapie, masáž a manuální terapie · 90 minut</div>
+        <h2>Recovery: záda a ramena</h2>
+        <p>Komplexní péče o záda, ramena a šíji. Zaměřená na uvolnění napětí, lepší pohyblivost a obnovu po přetížení. Doporučuji jednou týdně.</p>
+        <div class="lists">
+          <div><h3>Co procedura zahrnuje</h3><ul>
+            <li>Práce s ramenním kloubem</li><li>Trapézový sval a šíje</li><li>Lopatky a hrudní oblast</li><li>Hluboká masáž zad</li><li>Myofasciální protažení</li><li>Prvky manuální terapie</li><li>Mobilizace svalů po přetížení</li></ul></div>
+          <div><h3>Výsledky</h3><ul>
+            <li>Méně bolesti a napětí</li><li>Větší rozsah pohybu</li><li>Obnovená svalová rovnováha</li><li>Prevence zranění a přetížení</li><li>Pocit lehkosti a regenerace</li></ul></div>
+        </div>
+      </div>
+      <div class="rec-photo"><img src="img/1699523229208-be1e1dd9252d.jpg" alt="Hluboká masáž zad a ramen"></div>
+    </div>
+    <div class="packs">
+      <div class="pack"><span class="cnt">1 seance · 90 min</span><span class="price">1 990 Kč</span><span class="per">jedna procedura</span><span class="sp"></span><button class="btn line" type="button" data-pack="Recovery, 1 seance">Vybrat</button></div>
+      <div class="pack best"><span class="cnt">4 seance · 90 min</span><span class="price">7 200 Kč</span><span class="per">1 800 Kč za proceduru</span><span class="save">Úspora 760 Kč</span><span class="sp"></span><button class="btn" type="button" data-pack="Recovery, balíček 4 seancí">Vybrat balíček</button></div>
+      <div class="pack"><span class="cnt">8 seancí · 90 min</span><span class="price">13 600 Kč</span><span class="per">1 700 Kč za proceduru</span><span class="save">Úspora 2 320 Kč</span><span class="sp"></span><button class="btn line" type="button" data-pack="Recovery, balíček 8 seancí">Vybrat balíček</button></div>
+    </div>
+    <div class="rec-note"><span><b>Doporučení:</b> 1× týdně pro stabilní výsledky a dlouhodobou regeneraci.</span><span><b>Individuální přístup:</b> každá procedura podle vašeho aktuálního stavu a cílů.</span></div>
+  </div>
+</section>
+
+<section id="priprava" style="padding-top:0">
+  <h2>Jak se připravit na masáž</h2>
+  <p class="intro">Šest drobností, díky kterým si masáž užijete víc a účinek vydrží déle.</p>
+  <ol class="steps">
+    <li><div><h3>Dostatečně pijte</h3><p>Před masáží vypijte dost vody. Dobře hydratované svaly lépe reagují na ošetření.</p></div></li>
+    <li><div><h3>Vyhněte se těžkým jídlům</h3><p>Snažte se nejíst velké jídlo 1–2 hodiny před masáží.</p></div></li>
+    <li><div><h3>Pohodlné oblečení</h3><p>Přijďte ve volném oblečení, abyste se cítili uvolněně před masáží i po ní.</p></div></li>
+    <li><div><h3>Oblečení během masáže</h3><p>Svléknete se do míry, která je vám příjemná, obvykle do spodního prádla. Odhalená je jen část těla, kterou právě masíruji, zbytek je přikrytý ručníkem.</p></div></li>
+    <li><div><h3>Řekněte mi, co vás trápí</h3><p>Dejte vědět o zraněních, bolestech, zdravotních obtížích nebo místech, na která se mám zaměřit. Vaše zpětná vazba během masáže je vždy vítaná.</p></div></li>
+    <li><div><h3>Po masáži</h3><p>Pijte vodu, dopřejte tělu odpočinek a vyhněte se náročné fyzické aktivitě po zbytek dne.</p></div></li>
+  </ol>
+  <div class="expect">
+    <div class="card"><h3>Co očekávat</h3><p>Terapeutická masáž se zaměřuje na svalové napětí, úlevu od bolesti, zlepšení pohyblivosti a regeneraci. Kombinuji techniky podle vašich potřeb, tlak a intenzitu přizpůsobím vašemu stavu a pohodlí.</p></div>
+    <aside class="card hours"><h3>Otevírací doba</h3><div class="now" id="now"></div><ul id="hoursList"></ul></aside>
+  </div>
+</section>
+
+<section style="padding-top:0">
+  <div class="about">
+    <img src="img/1775133262667-316bd4d9e5b5.jpg" alt="Masáž zad v klidném prostředí">
+    <div>
+      <h2>O mně</h2>
+      <p>Věnuji se regeneraci, sportovní masáži, lymfodrenáži a péči o obličej. Každou masáž skládám podle toho, s čím přicházíte: jinak pracuji se zády po přetížení, jinak s otoky nohou a jinak s obličejem před důležitým dnem.</p>
+      <p>Na masáži nikam nespěcháme. Mezi klienty mám vždy čas vyvětrat, převléct lehátko a připravit vše pro vás.</p>
+    </div>
+  </div>
+</section>
+
+<section id="poukaz" style="padding-top:0">
+  <div class="gift">
+    <div>
+      <h2>Darujte péči</h2>
+      <p class="intro" style="margin-bottom:28px">Vyplňte údaje a hned uvidíte, jak bude poukaz vypadat. Pošleme ho e-mailem, nebo vytištěný v obálce. Platí 6 měsíců.</p>
+      <form id="gf">
+        <label>Pro koho<input id="g-to" value="Mamince" maxlength="40"></label>
+        <label>Od koho<input id="g-from" value="Klára" maxlength="40"></label>
+        <label>Masáž<select id="g-r">
+          <option value="1200">Regenerační masáž celého těla, 60 min</option>
+          <option value="1600" selected>Regenerační masáž celého těla, 90 min</option>
+          <option value="1400">Sportovní masáž, 60 min</option>
+          <option value="1300">Manuální lymfodrenáž, 60 min</option>
+          <option value="1900">Komplexní regenerační masáž, 90 min</option>
+          <option value="1200">Skulpturální masáž obličeje, 50 min</option>
+          <option value="1400">Myolifting obličeje, Anti-Age</option>
+          <option value="1990">Recovery záda a ramena, 90 min</option>
+        </select></label>
+        <button class="btn" type="submit">Objednat poukaz</button>
+        <p class="ok" id="gok" role="status" hidden></p>
+      </form>
+    </div>
+    <div class="voucher" aria-live="polite">
+      <div class="v-top"><span>Tichá voda · dárkový poukaz</span><span>TV-2611</span></div>
+      <div><div class="v-for" id="v-for"></div><div class="v-name" id="v-name"></div></div>
+      <div class="v-bottom"><span id="v-valid"></span><span class="v-price" id="v-price"></span></div>
+    </div>
+  </div>
+</section>
+
+<section id="objednani" style="padding-top:0">
+  <div class="book">
+    <div>
+      <h2>Objednání</h2>
+      <p>Napište, kdy se vám to hodí. Termín potvrdím SMS.</p>
+      <p><b>+420 777 000 000</b><br>Instagram @tichavoda.praha<br>Mánesova 28, Praha 2 – Vinohrady</p>
+    </div>
+    <form id="f">
+      <label>Masáž<select id="r">
+        <optgroup label="Regenerační masáž"><option>Celé tělo, 60 min · 1 200 Kč</option><option>Celé tělo, 90 min · 1 600 Kč</option><option>Záda a šíje, 45 min · 1 000 Kč</option><option>Záda a šíje, 60 min · 1 200 Kč</option></optgroup>
+        <optgroup label="Sportovní masáž"><option>Celé tělo, 60 min · 1 400 Kč</option><option>Celé tělo, 90 min · 1 900 Kč</option></optgroup>
+        <optgroup label="Manuální lymfodrenáž"><option>Lymfodrenáž, 60 min · 1 300 Kč</option><option>Lymfodrenáž, 90 min · 1 800 Kč</option></optgroup>
+        <optgroup label="Komplexní"><option>Komplexní regenerační masáž, 90 min · 1 900 Kč</option></optgroup>
+        <optgroup label="Masáže obličeje"><option>Klasická masáž obličeje · 700 Kč</option><option>Skulpturální masáž, 30 min · 800 Kč</option><option>Skulpturální masáž, 50 min · 1 200 Kč</option><option>Myolifting obličeje, Anti-Age · 1 400 Kč</option></optgroup>
+        <optgroup label="Recovery záda a ramena"><option>Recovery, 1 seance · 1 990 Kč</option><option>Recovery, balíček 4 seancí · 7 200 Kč</option><option>Recovery, balíček 8 seancí · 13 600 Kč</option></optgroup>
+      </select></label>
+      <div class="two"><label>Datum<input type="date" id="d" required></label><label>Čas<select id="tm"><option>10:00</option><option>12:00</option><option>14:00</option><option>16:00</option><option selected>18:00</option><option>19:30</option></select></label></div>
+      <div class="two"><label>Jméno<input id="n" required autocomplete="name"></label><label>Telefon<input id="t" type="tel" required autocomplete="tel"></label></div>
+      <label>Co vás trápí (nepovinné)<input id="note" placeholder="Například: ztuhlá ramena, oteklé nohy"></label>
+      <button class="btn" type="submit">Objednat se</button>
+      <p class="ok" id="ok" role="status" hidden></p>
+    </form>
+  </div>
+</section>
+</div>
+<div class="wrap"><footer class="site">Tichá voda, 2026 · Masáž nenahrazuje lékařskou péči · Fotografie: Unsplash</footer></div>
+
+<button class="rain" id="rain" type="button" aria-pressed="false"><span class="bars" aria-hidden="true"><i></i><i></i><i></i><i></i></span><span class="t">Pustit déšť</span></button>
+
+<script>
+// ---- hero: warm light follows the pointer ----
+(()=>{
+  const gh=document.getElementById('gh'),warm=document.getElementById('ghWarm'),heat=document.getElementById('ghHeat');
+  const reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if(matchMedia('(hover: none)').matches)document.getElementById('ghHintText').textContent='Přejeďte prstem po fotce';
+  let W=0,H=0,x=0,y=0,tx=0,ty=0,last=-1e9,visible=true,raf=0,boost=0;
+  const trail=[];
+  function size(){W=gh.clientWidth;H=gh.clientHeight;if(!x){x=tx=W*.66;y=ty=H*(W<700?.3:.42)}}
+  function paint(){
+    const R=Math.max(W,H)*(.30+boost*.04);
+    const L=[`radial-gradient(circle ${R}px at ${x}px ${y}px,#000 0%,rgba(0,0,0,.92) 28%,rgba(0,0,0,.45) 62%,rgba(0,0,0,0) 100%)`];
+    for(let i=1;i<=5;i++){const p=trail[i*4];if(!p)break;const a=.42*(1-i/6);
+      L.push(`radial-gradient(circle ${R*(1-i*.11)}px at ${p[0]}px ${p[1]}px,rgba(0,0,0,${a}) 0%,rgba(0,0,0,0) 100%)`)}
+    L.push('linear-gradient(rgba(0,0,0,.1),rgba(0,0,0,.1))');
+    const m=L.join(',');warm.style.webkitMaskImage=m;warm.style.maskImage=m;
+    heat.style.background=`radial-gradient(circle ${R*.9}px at ${x}px ${y}px,rgba(255,170,90,.5),rgba(255,140,60,.16) 45%,rgba(0,0,0,0) 75%)`;
+  }
+  function frame(t){
+    raf=0;if(!visible)return;
+    if(performance.now()-last>2600){tx=W*(.64+.16*Math.sin(t/3400));ty=H*((W<700?.3:.44)+.14*Math.sin(t/2600+1.3))}
+    x+=(tx-x)*.075;y+=(ty-y)*.075;boost*=.96;
+    trail.unshift([x,y]);if(trail.length>24)trail.pop();
+    paint();raf=requestAnimationFrame(frame);
+  }
+  function move(cx,cy){const r=gh.getBoundingClientRect();tx=cx-r.left;ty=cy-r.top;
+    boost=Math.min(1,boost+Math.hypot(tx-x,ty-y)/900);last=performance.now();gh.classList.add('touched')}
+  gh.addEventListener('pointermove',e=>move(e.clientX,e.clientY));
+  gh.addEventListener('touchmove',e=>{const t=e.touches[0];if(t)move(t.clientX,t.clientY)},{passive:true});
+  gh.addEventListener('pointerleave',()=>{last=performance.now()-1800});
+  new ResizeObserver(size).observe(gh);size();
+  if(reduce){paint();return}
+  new IntersectionObserver(es=>{visible=es[0].isIntersecting;if(visible&&!raf)raf=requestAnimationFrame(frame)}).observe(gh);
+  raf=requestAnimationFrame(frame);
+})();
+// ---- recovery packages -> booking form ----
+const sel=document.getElementById('r');
+document.querySelectorAll('[data-pack]').forEach(b=>b.addEventListener('click',()=>{
+  const want=b.dataset.pack;const o=[...sel.options].find(o=>o.text.startsWith(want));if(o)sel.value=o.value;
+  document.getElementById('objednani').scrollIntoView({behavior:matchMedia('(prefers-reduced-motion: reduce)').matches?'auto':'smooth'});
+  setTimeout(()=>document.getElementById('d').focus({preventScroll:true}),600);
+}));
+// ---- hours ----
+const HN=['Neděle','Pondělí','Úterý','Středa','Čtvrtek','Pátek','Sobota'];const today=new Date().getDay();
+const HRS={0:'zavřeno',6:'10:00–16:00'};
+[1,2,3,4,5,6,0].forEach(d=>{const li=document.createElement('li');if(d===today)li.className='today';
+  li.innerHTML=`<span>${HN[d]}</span><span>${HRS[d]||'9:00–20:00'}</span>`;hoursList.append(li)});
+(()=>{const h=new Date().getHours(),n=document.getElementById('now');
+  const open=today===0?null:today===6?[10,16]:[9,20];
+  if(!open)n.textContent='Dnes zavřeno, zítra od 9:00';
+  else if(h<open[0])n.textContent=`Dnes otevírám v ${open[0]}:00`;
+  else if(h<open[1])n.textContent=`Teď otevřeno, do ${open[1]}:00`;
+  else n.textContent='Dnes už zavřeno';})();
+// ---- rain sound (Web Audio, starts only on click) ----
+let ac=null,master=null;
+document.getElementById('rain').onclick=function(){
+  const on=this.getAttribute('aria-pressed')!=='true';
+  this.setAttribute('aria-pressed',on);this.querySelector('.t').textContent=on?'Ztišit déšť':'Pustit déšť';
+  if(!ac){
+    ac=new (window.AudioContext||window.webkitAudioContext)();
+    const len=ac.sampleRate*4,buf=ac.createBuffer(2,len,ac.sampleRate);
+    for(let c=0;c<2;c++){const d=buf.getChannelData(c);let last=0;for(let i=0;i<len;i++){const w=Math.random()*2-1;last=(last+0.04*w)/1.04;d[i]=last*3.2+w*0.08}}
+    const src=ac.createBufferSource();src.buffer=buf;src.loop=true;
+    const lp=ac.createBiquadFilter();lp.type='lowpass';lp.frequency.value=1400;
+    const hp=ac.createBiquadFilter();hp.type='highpass';hp.frequency.value=180;
+    const lfo=ac.createOscillator(),lg=ac.createGain();lfo.frequency.value=.07;lg.gain.value=400;lfo.connect(lg).connect(lp.frequency);lfo.start();
+    master=ac.createGain();master.gain.value=0;
+    src.connect(hp).connect(lp).connect(master).connect(ac.destination);src.start();
+    (function drop(){if(ac){const o=ac.createOscillator(),g=ac.createGain();o.frequency.value=900+Math.random()*1600;g.gain.setValueAtTime(.0001,ac.currentTime);g.gain.exponentialRampToValueAtTime(.05,ac.currentTime+.005);g.gain.exponentialRampToValueAtTime(.0001,ac.currentTime+.09);o.connect(g).connect(master);o.start();o.stop(ac.currentTime+.1)}setTimeout(drop,120+Math.random()*600)})();
+  }
+  ac.resume();master.gain.cancelScheduledValues(ac.currentTime);
+  master.gain.setTargetAtTime(on?.35:0,ac.currentTime,.6);
+};
+// ---- voucher ----
+const fmt=n=>n.toLocaleString('cs-CZ')+' Kč';
+function v(){const s=document.getElementById('g-r');
+  document.getElementById('v-for').textContent=`Pro: ${document.getElementById('g-to').value||'…'}  ·  od: ${document.getElementById('g-from').value||'…'}`;
+  document.getElementById('v-name').textContent=s.options[s.selectedIndex].text;
+  document.getElementById('v-price').textContent=fmt(+s.value);
+  const d=new Date();d.setMonth(d.getMonth()+6);
+  document.getElementById('v-valid').textContent='Platí do '+d.toLocaleDateString('cs-CZ');}
+['g-to','g-from','g-r'].forEach(id=>document.getElementById(id).addEventListener('input',v));v();
+gf.addEventListener('submit',e=>{e.preventDefault();gok.hidden=false;gok.textContent='Poukaz objednán. Ozvu se kvůli platbě a doručení.';gf.querySelector('button').disabled=true});
+// ---- booking ----
+const d=document.getElementById('d');const t=new Date();t.setDate(t.getDate()+1);d.value=t.toISOString().slice(0,10);d.min=new Date().toISOString().slice(0,10);
+f.addEventListener('submit',e=>{e.preventDefault();ok.hidden=false;
+ ok.textContent=`Rezervováno: ${r.value.split(' · ')[0]}, ${new Date(d.value).toLocaleDateString('cs-CZ',{day:'numeric',month:'long'})} v ${tm.value}. Potvrzení přijde SMS.`;
+ f.querySelector('button[type=submit]').disabled=true});
+</script>
+</body>
+</html>
